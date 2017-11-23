@@ -1,0 +1,1739 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>          
+            <link rel="canonical" href="http://blog.csdn.net/guolin_blog/article/details/8689140"/> 
+
+   
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>Android桌面悬浮窗效果实现，仿360手机卫士悬浮窗效果 - 郭霖的专栏
+        - CSDN博客</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="大家好，今天给大家带来一个仿360手机卫士悬浮窗效果的教程，在开始之前请允许我说几句不相干的废话。不知不觉我发现自己接触Android已有近三个年头了，期间各种的成长少不了各位高手的帮助，总是有很多高手喜欢把自己的经验写在网上，供大家来学习，我也是从中受惠了很多，在此我深表感谢。可是我发现我却从来没有将自己平时的一些心得拿出来与大家分享，共同学习，太没有奉献精神了。于是我痛定思痛，决定从今天开始写博客，希望可以指点在我后面的开发者，更快地进入Android开发者的行列当中。好了，废话就说这么多，下面开始" />
+
+    <meta name="keywords" content="android,悬浮窗,360" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+       
+       
+        <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/skin-yellow/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/sinyu890807/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>
+     
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/guolin_blog">郭霖的专栏</a></h2>
+            <h3>每当你在感叹，如果有这样一个东西就好了的时候，请注意，其实这是你的机会</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/guolin_blog?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/guolin_blog?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/guolin_blog/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                   
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "sinyu890807";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/guolin_blog";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+<a href="http://blog.csdn.net/turingbooks/article/details/78475571">
+<font color=red><strong>图灵赠书——程序员11月书单</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://edu.csdn.net/topic/web1?utm_source=blog4">
+<font color=blue><strong>【力荐】写给想成为前端工程师的同学们！</strong></font></a>
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a 
+href="http://blog.csdn.net/epubit17/article/details/78474448">
+<font color=blue><strong>异步赠书:kafka/TensorFlow机器学习</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://blog.csdn.net/broadview2006/article/details/78491167">
+<font color=red><strong>每周荐书：OpenCV、自然语言、SpringBoot2</strong></font></a>
+
+
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=Android%e6%a1%8c%e9%9d%a2%e6%82%ac%e6%b5%ae%e7%aa%97%e6%95%88%e6%9e%9c%e5%ae%9e%e7%8e%b0%ef%bc%8c%e4%bb%bf360%e6%89%8b%e6%9c%ba%e5%8d%ab%e5%a3%ab%e6%82%ac%e6%b5%ae%e7%aa%97%e6%95%88%e6%9e%9c&u=http://blog.csdn.net/guolin_blog/article/details/8689140"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+    <h1>
+        <span class="link_title"><a href="/guolin_blog/article/details/8689140">
+        Android桌面悬浮窗效果实现，仿360手机卫士悬浮窗效果        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/android' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">android</a><a href='http://www.csdn.net/tag/%e6%82%ac%e6%b5%ae%e7%aa%97' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">悬浮窗</a><a href='http://www.csdn.net/tag/360' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">360</a><a href='http://www.csdn.net/tag/%e7%89%b9%e6%95%88' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">特效</a><a href='http://www.csdn.net/tag/%e6%a1%8c%e9%9d%a2' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">桌面</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2013-03-19 17:21</span>
+            <span class="link_view" title="阅读次数">109608人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(199)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('Android%e6%a1%8c%e9%9d%a2%e6%82%ac%e6%b5%ae%e7%aa%97%e6%95%88%e6%9e%9c%e5%ae%9e%e7%8e%b0%ef%bc%8c%e4%bb%bf360%e6%89%8b%e6%9c%ba%e5%8d%ab%e5%a3%ab%e6%82%ac%e6%b5%ae%e7%aa%97%e6%95%88%e6%9e%9c','8689140');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(8689140,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('1369150','sinyu890807','top','8689140');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Android精华教程<em>（20）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/sinyu890807/article/category/1369150"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1369150">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文出自郭霖的博客，转载必须注明出处。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+<p>转载请注明出处：<a target=_blank target="_blank" href="http://blog.csdn.net/sinyu890807/article/details/8689140"></a><a target=_blank target="_blank" href="http://blog.csdn.net/guolin_blog/article/details/8689140">http://blog.csdn.net/guolin_blog/article/details/8689140</a></p><p><br /></p><p>大家好，今天给大家带来一个仿360手机卫士悬浮窗效果的教程，在开始之前请允许我先说几句不相干的话。</p><p><br /></p><p>不知不觉我发现自己接触Android已有近三个年头了，期间各种的成长少不了各位高手的帮助，总是有很多高手喜欢把自己的经验写在网上，供大家来学习，我也是从中受惠了很多，在此我深表感谢。可是我发现我却从来没有将自己平时的一些心得拿出来与大家分享，共同学习，太没有奉献精神了。于是我痛定思痛，决定从今天开始写博客，希望可以指点在我后面的开发者，更快地进入Android开发者的行列当中。</p><p><br /></p><p>好了，废话就说这么多，下面开始进入今天的主题吧。</p><p><br /></p><p>360手机卫士我相信大家都知道，好多人手机上都会装这一款软件，那么我们对它的一个桌面悬浮窗效果想必都不会陌生。请看下图：</p><p><br /></p><p style="text-align: center;"><img src="http://img.my.csdn.net/uploads/201303/18/1363616413_6003.png" alt="" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="http://img.my.csdn.net/uploads/201303/18/1363616427_5380.png" alt="" /><br /></p><p style="text-align: center;"><br /></p><p>首先是一个小的悬浮窗显示的是当前使用了百分之多少的内存，点击一下小悬浮窗，就会弹出一个大的悬浮窗，可以一键加速。好，我们现在就来模拟实现一下类似的效果。</p><p><br /></p><p><span style="text-indent:26px">先谈一下基本的实现原理，这种桌面悬浮窗的效果很类似与Widget，但是它比Widget要灵活的多。主要是通过</span><span style="text-indent:26px">WindowManager这个类来实现的，调用这个类的</span><span style="text-indent:26px">addView方法用于添加一个悬浮窗，</span><span style="text-indent:26px">updateViewLayout方法用于更新悬浮窗的参数，</span><span style="text-indent:26px">removeView用于移除悬浮窗。</span><span style="text-indent:26px">其中悬浮窗的参数有必要详细说明一下。</span></p><p><span style="text-indent:26px"><br /></span></p><p><span style="text-indent:26px">WindowManager.LayoutParams这个类用于提供悬浮窗所需的参数，其中有几个经常会用到的变量：</span></p><p><span style="text-indent:26px"><span style="color:#3333ff">type</span>值用于确定悬浮窗的类型，一般设为2002，表示在所有应用程序之上，但在状态栏之下。</span></p><p><span style="text-indent:26px"><span style="background-color:rgb(255,255,255)"><span style="color:#3333ff">flags</span></span>值用于确定悬浮窗的行为，比如说不可聚焦，非模态对话框等等，属性非常多，大家可以查看文档。<br /></span></p><p><span style="text-indent:26px"><span style="color:#3333ff">gravity</span>值用于确定悬浮窗的对齐方式，一般设为左上角对齐，这样当拖动悬浮窗的时候方便计算坐标。</span></p><p><span style="text-indent:26px"><span style="color:#3333ff">x</span>值用于确定悬浮窗的位置，如果要横向移动悬浮窗，就需要改变这个值。</span></p><p><span style="text-indent:26px"><span style="color:#3333ff">y</span>值用于确定悬浮窗的位置，如果要纵向移动悬浮窗，就需要改变这个值。</span></p><p><span style="text-indent:26px"><span style="color:#3333ff">width</span>值用于指定悬浮窗的宽度。</span></p><p><span style="text-indent:26px"><span style="color:#3333ff">height</span>值用于指定悬浮窗的高度。</span></p><p><span style="text-indent:26px"><br /></span></p><p><span style="text-indent:26px">创建悬浮窗这种窗体需要向用户申请权限才可以的，因此还需要在AndroidManifest.xml中加入&lt;uses-permission android:name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot; /&gt;</span></p><p><span style="text-indent:26px"><br /></span></p><p>原理介绍完了，下面我们开始用代码实现。首先在Eclipse中新建一个Android项目，项目名就叫做360FloatWindowDemo。然后写一下布局文件，布局文件非常简单，只有一个按钮，打开或新建activity_main.xml，加入如下代码：</p><pre name="code" class="html">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;fill_parent&quot;
+    android:layout_height=&quot;fill_parent&quot;
+    tools:context=&quot;.MainActivity&quot; &gt;
+    &lt;Button
+        android:id=&quot;@+id/start_float_window&quot;
+        android:layout_width=&quot;fill_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:text=&quot;Start Float Window&quot; &gt;
+    &lt;/Button&gt;
+&lt;/RelativeLayout&gt;</pre><p>然后再新建一个名为float_window_small.xml的布局文件，用于做为小悬浮窗的布局，在其中加入如下代码：</p><pre name="code" class="html">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:id=&quot;@+id/small_window_layout&quot;
+	android:layout_width=&quot;60dip&quot;
+	android:layout_height=&quot;25dip&quot;
+	android:background=&quot;@drawable/bg_small&quot;
+    &gt;
+    &lt;TextView 
+        android:id=&quot;@+id/percent&quot;
+        android:layout_width=&quot;fill_parent&quot;
+        android:layout_height=&quot;fill_parent&quot;
+        android:gravity=&quot;center&quot;
+        android:textColor=&quot;#ffffff&quot;
+        /&gt;
+&lt;/LinearLayout&gt;</pre>再新建一个名为float_window_big.xml的布局文件，用于做为大悬浮窗的布局，在其中加入如下代码：<pre name="code" class="html">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;LinearLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:id=&quot;@+id/big_window_layout&quot;
+	android:layout_width=&quot;200dip&quot;
+	android:layout_height=&quot;100dip&quot;
+	android:background=&quot;@drawable/bg_big&quot;
+	android:orientation=&quot;vertical&quot;
+    &gt;
+    &lt;Button 
+        android:id=&quot;@+id/close&quot;
+        android:layout_width=&quot;100dip&quot;
+        android:layout_height=&quot;40dip&quot;
+        android:layout_gravity=&quot;center_horizontal&quot;
+        android:layout_marginTop=&quot;12dip&quot;
+        android:text=&quot;关闭悬浮窗&quot;
+        /&gt;
+    &lt;Button 
+        android:id=&quot;@+id/back&quot;
+        android:layout_width=&quot;100dip&quot;
+        android:layout_height=&quot;40dip&quot;
+        android:layout_gravity=&quot;center_horizontal&quot;
+        android:text=&quot;返回&quot;
+        /&gt;
+&lt;/LinearLayout&gt;</pre><p>两个悬浮窗布局文件中用到的图片资源，大家可以随便找点图片来代替，同时我会给出源码，大家也可以从源码中取出。</p><p><br /></p><p>然后打开或创建MainActivity，这是项目的主界面，在里面加入如下代码：</p><pre name="code" class="java">public class MainActivity extends Activity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		Button startFloatWindow = (Button) findViewById(R.id.start_float_window);
+		startFloatWindow.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MainActivity.this, FloatWindowService.class);
+				startService(intent);
+				finish();
+			}
+		});
+	}
+}</pre>这里可以看到，MainActivity的代码非窗简单，就是对开启悬浮窗的按钮注册了一个点击事件，用于打开一个服务，然后关闭当前Activity。创建悬浮窗的逻辑都交给服务去做了。好，现在我们来创建这个服务。新建一个名为FloatWindowService的类，这个类继承自Service，在里面加入如下代码：<pre name="code" class="java">public class FloatWindowService extends Service {
+
+	/**
+	 * 用于在线程中创建或移除悬浮窗。
+	 */
+	private Handler handler = new Handler();
+
+	/**
+	 * 定时器，定时进行检测当前应该创建还是移除悬浮窗。
+	 */
+	private Timer timer;
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		return null;
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// 开启定时器，每隔0.5秒刷新一次
+		if (timer == null) {
+			timer = new Timer();
+			timer.scheduleAtFixedRate(new RefreshTask(), 0, 500);
+		}
+		return super.onStartCommand(intent, flags, startId);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		// Service被终止的同时也停止定时器继续运行
+		timer.cancel();
+		timer = null;
+	}
+
+	class RefreshTask extends TimerTask {
+
+		@Override
+		public void run() {
+			// 当前界面是桌面，且没有悬浮窗显示，则创建悬浮窗。
+			if (isHome() &amp;&amp; !MyWindowManager.isWindowShowing()) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						MyWindowManager.createSmallWindow(getApplicationContext());
+					}
+				});
+			}
+			// 当前界面不是桌面，且有悬浮窗显示，则移除悬浮窗。
+			else if (!isHome() &amp;&amp; MyWindowManager.isWindowShowing()) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						MyWindowManager.removeSmallWindow(getApplicationContext());
+						MyWindowManager.removeBigWindow(getApplicationContext());
+					}
+				});
+			}
+			// 当前界面是桌面，且有悬浮窗显示，则更新内存数据。
+			else if (isHome() &amp;&amp; MyWindowManager.isWindowShowing()) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						MyWindowManager.updateUsedPercent(getApplicationContext());
+					}
+				});
+			}
+		}
+
+	}
+
+	/**
+	 * 判断当前界面是否是桌面
+	 */
+	private boolean isHome() {
+		ActivityManager mActivityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		List&lt;RunningTaskInfo&gt; rti = mActivityManager.getRunningTasks(1);
+		return getHomes().contains(rti.get(0).topActivity.getPackageName());
+	}
+
+	/**
+	 * 获得属于桌面的应用的应用包名称
+	 * 
+	 * @return 返回包含所有包名的字符串列表
+	 */
+	private List&lt;String&gt; getHomes() {
+		List&lt;String&gt; names = new ArrayList&lt;String&gt;();
+		PackageManager packageManager = this.getPackageManager();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		List&lt;ResolveInfo&gt; resolveInfo = packageManager.queryIntentActivities(intent,
+				PackageManager.MATCH_DEFAULT_ONLY);
+		for (ResolveInfo ri : resolveInfo) {
+			names.add(ri.activityInfo.packageName);
+		}
+		return names;
+	}
+}</pre><p>FloatWindowService的onStartCommand方法中开启了一个定时器，每隔500毫秒就会执行RefreshTask。在RefreshTask当中，要进行判断，如果手机当前是在桌面的话，就应该显示悬浮窗，如果手机打开了某一个应用程序，就应该移除悬浮窗，如果手机在桌面的话，还应该更新内存使用百分比的数据。而当FloatWindowService被销毁的时候，应该将定时器停止，否则它还会一直运行。</p><p><br /></p><p>从上面的代码我们也可以看出，创建和移除悬浮窗，以及更新悬浮窗内的数据，都是由MyWindowManager这个类来管理的，比起直接把这些代码写在Activity或Service当中，使用一个专门的工具类来管理要好的多。不过要想创建悬浮窗，还是先要把悬浮窗的View写出来。</p><p><br /></p><p>新建一个名叫FloatWindowSmallView的类，继承自LinearLayout。新建一个名叫FloatWindowBigView的类，也继承自LinearLayout。</p><p><br /></p><p>在FloatWindowSmallView中加入如下代码：</p><pre name="code" class="java">public class FloatWindowSmallView extends LinearLayout {
+
+	/**
+	 * 记录小悬浮窗的宽度
+	 */
+	public static int viewWidth;
+
+	/**
+	 * 记录小悬浮窗的高度
+	 */
+	public static int viewHeight;
+
+	/**
+	 * 记录系统状态栏的高度
+	 */
+	 private static int statusBarHeight;
+
+	/**
+	 * 用于更新小悬浮窗的位置
+	 */
+	private WindowManager windowManager;
+
+	/**
+	 * 小悬浮窗的参数
+	 */
+	private WindowManager.LayoutParams mParams;
+
+	/**
+	 * 记录当前手指位置在屏幕上的横坐标值
+	 */
+	private float xInScreen;
+
+	/**
+	 * 记录当前手指位置在屏幕上的纵坐标值
+	 */
+	private float yInScreen;
+
+	/**
+	 * 记录手指按下时在屏幕上的横坐标的值
+	 */
+	private float xDownInScreen;
+
+	/**
+	 * 记录手指按下时在屏幕上的纵坐标的值
+	 */
+	private float yDownInScreen;
+
+	/**
+	 * 记录手指按下时在小悬浮窗的View上的横坐标的值
+	 */
+	private float xInView;
+
+	/**
+	 * 记录手指按下时在小悬浮窗的View上的纵坐标的值
+	 */
+	private float yInView;
+
+	public FloatWindowSmallView(Context context) {
+		super(context);
+		windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		LayoutInflater.from(context).inflate(R.layout.float_window_small, this);
+		View view = findViewById(R.id.small_window_layout);
+		viewWidth = view.getLayoutParams().width;
+		viewHeight = view.getLayoutParams().height;
+		TextView percentView = (TextView) findViewById(R.id.percent);
+		percentView.setText(MyWindowManager.getUsedPercentValue(context));
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			// 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度
+			xInView = event.getX();
+			yInView = event.getY();
+			xDownInScreen = event.getRawX();
+			yDownInScreen = event.getRawY() - getStatusBarHeight();
+			xInScreen = event.getRawX();
+			yInScreen = event.getRawY() - getStatusBarHeight();
+			break;
+		case MotionEvent.ACTION_MOVE:
+			xInScreen = event.getRawX();
+			yInScreen = event.getRawY() - getStatusBarHeight();
+			// 手指移动的时候更新小悬浮窗的位置
+			updateViewPosition();
+			break;
+		case MotionEvent.ACTION_UP:
+			// 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
+			if (xDownInScreen == xInScreen &amp;&amp; yDownInScreen == yInScreen) {
+				openBigWindow();
+			}
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+
+	/**
+	 * 将小悬浮窗的参数传入，用于更新小悬浮窗的位置。
+	 * 
+	 * @param params
+	 *            小悬浮窗的参数
+	 */
+	public void setParams(WindowManager.LayoutParams params) {
+		mParams = params;
+	}
+
+	/**
+	 * 更新小悬浮窗在屏幕中的位置。
+	 */
+	private void updateViewPosition() {
+		mParams.x = (int) (xInScreen - xInView);
+		mParams.y = (int) (yInScreen - yInView);
+		windowManager.updateViewLayout(this, mParams);
+	}
+
+	/**
+	 * 打开大悬浮窗，同时关闭小悬浮窗。
+	 */
+	private void openBigWindow() {
+		MyWindowManager.createBigWindow(getContext());
+		MyWindowManager.removeSmallWindow(getContext());
+	}
+
+	/**
+	 * 用于获取状态栏的高度。
+	 * 
+	 * @return 返回状态栏高度的像素值。
+	 */
+	private int getStatusBarHeight() {
+		if (statusBarHeight == 0) {
+			try {
+				Class&lt;?&gt; c = Class.forName(&quot;com.android.internal.R$dimen&quot;);
+				Object o = c.newInstance();
+				Field field = c.getField(&quot;status_bar_height&quot;);
+				int x = (Integer) field.get(o);
+				statusBarHeight = getResources().getDimensionPixelSize(x);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return statusBarHeight;
+	}</pre><p>其中，对这个View的onTouchEvent事件进行了重写，用于实现拖动和点击的效果。如果发现用户触发了ACTION_DOWN事件，会记录按下时的坐标等数据。如果发现用户触发了ACTION_MOVE事件，则根据当前移动的坐标更新悬浮窗在屏幕中的位置。如果发现用户触发了ACTION_UP事件，会和ACTION_DOWN中记下的坐标对比，如果发现是相同的，则视为用户对悬浮窗进行了点击。点击小悬浮窗则打开大悬浮窗，然后我们来实现大悬浮窗的View。</p><p><br /></p><p>在FloatWindowBigView中加入如下代码：</p><pre name="code" class="java">public class FloatWindowBigView extends LinearLayout {
+
+	/**
+	 * 记录大悬浮窗的宽度
+	 */
+	public static int viewWidth;
+
+	/**
+	 * 记录大悬浮窗的高度
+	 */
+	public static int viewHeight;
+
+	public FloatWindowBigView(final Context context) {
+		super(context);
+		LayoutInflater.from(context).inflate(R.layout.float_window_big, this);
+		View view = findViewById(R.id.big_window_layout);
+		viewWidth = view.getLayoutParams().width;
+		viewHeight = view.getLayoutParams().height;
+		Button close = (Button) findViewById(R.id.close);
+		Button back = (Button) findViewById(R.id.back);
+		close.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 点击关闭悬浮窗的时候，移除所有悬浮窗，并停止Service
+				MyWindowManager.removeBigWindow(context);
+				MyWindowManager.removeSmallWindow(context);
+				Intent intent = new Intent(getContext(), FloatWindowService.class);
+				context.stopService(intent);
+			}
+		});
+		back.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 点击返回的时候，移除大悬浮窗，创建小悬浮窗
+				MyWindowManager.removeBigWindow(context);
+				MyWindowManager.createSmallWindow(context);
+			}
+		});
+	}
+}</pre><p>比起FloatWindowSmallView，FloatWindowBigView要简单的多，其中只有两个按钮，点击close按钮，将悬浮窗全部移除，并将Service终止。单击back按钮则移除大悬浮窗，重新创建小悬浮窗。</p><p><br /></p><p>现在两个悬浮窗的View都已经写好了，我们来创建MyWindowManager，代码如下：</p><pre name="code" class="java">public class MyWindowManager {
+
+	/**
+	 * 小悬浮窗View的实例
+	 */
+	private static FloatWindowSmallView smallWindow;
+
+	/**
+	 * 大悬浮窗View的实例
+	 */
+	private static FloatWindowBigView bigWindow;
+
+	/**
+	 * 小悬浮窗View的参数
+	 */
+	private static LayoutParams smallWindowParams;
+
+	/**
+	 * 大悬浮窗View的参数
+	 */
+	private static LayoutParams bigWindowParams;
+
+	/**
+	 * 用于控制在屏幕上添加或移除悬浮窗
+	 */
+	private static WindowManager mWindowManager;
+
+	/**
+	 * 用于获取手机可用内存
+	 */
+	private static ActivityManager mActivityManager;
+
+	/**
+	 * 创建一个小悬浮窗。初始位置为屏幕的右部中间位置。
+	 * 
+	 * @param context
+	 *            必须为应用程序的Context.
+	 */
+	public static void createSmallWindow(Context context) {
+		WindowManager windowManager = getWindowManager(context);
+		int screenWidth = windowManager.getDefaultDisplay().getWidth();
+		int screenHeight = windowManager.getDefaultDisplay().getHeight();
+		if (smallWindow == null) {
+			smallWindow = new FloatWindowSmallView(context);
+			if (smallWindowParams == null) {
+				smallWindowParams = new LayoutParams();
+				smallWindowParams.type = LayoutParams.TYPE_PHONE;
+				smallWindowParams.format = PixelFormat.RGBA_8888;
+				smallWindowParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
+						| LayoutParams.FLAG_NOT_FOCUSABLE;
+				smallWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
+				smallWindowParams.width = FloatWindowSmallView.viewWidth;
+				smallWindowParams.height = FloatWindowSmallView.viewHeight;
+				smallWindowParams.x = screenWidth;
+				smallWindowParams.y = screenHeight / 2;
+			}
+			smallWindow.setParams(smallWindowParams);
+			windowManager.addView(smallWindow, smallWindowParams);
+		}
+	}
+
+	/**
+	 * 将小悬浮窗从屏幕上移除。
+	 * 
+	 * @param context
+	 *            必须为应用程序的Context.
+	 */
+	public static void removeSmallWindow(Context context) {
+		if (smallWindow != null) {
+			WindowManager windowManager = getWindowManager(context);
+			windowManager.removeView(smallWindow);
+			smallWindow = null;
+		}
+	}
+
+	/**
+	 * 创建一个大悬浮窗。位置为屏幕正中间。
+	 * 
+	 * @param context
+	 *            必须为应用程序的Context.
+	 */
+	public static void createBigWindow(Context context) {
+		WindowManager windowManager = getWindowManager(context);
+		int screenWidth = windowManager.getDefaultDisplay().getWidth();
+		int screenHeight = windowManager.getDefaultDisplay().getHeight();
+		if (bigWindow == null) {
+			bigWindow = new FloatWindowBigView(context);
+			if (bigWindowParams == null) {
+				bigWindowParams = new LayoutParams();
+				bigWindowParams.x = screenWidth / 2 - FloatWindowBigView.viewWidth / 2;
+				bigWindowParams.y = screenHeight / 2 - FloatWindowBigView.viewHeight / 2;
+				bigWindowParams.type = LayoutParams.TYPE_PHONE;
+				bigWindowParams.format = PixelFormat.RGBA_8888;
+				bigWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
+				bigWindowParams.width = FloatWindowBigView.viewWidth;
+				bigWindowParams.height = FloatWindowBigView.viewHeight;
+			}
+			windowManager.addView(bigWindow, bigWindowParams);
+		}
+	}
+
+	/**
+	 * 将大悬浮窗从屏幕上移除。
+	 * 
+	 * @param context
+	 *            必须为应用程序的Context.
+	 */
+	public static void removeBigWindow(Context context) {
+		if (bigWindow != null) {
+			WindowManager windowManager = getWindowManager(context);
+			windowManager.removeView(bigWindow);
+			bigWindow = null;
+		}
+	}
+
+	/**
+	 * 更新小悬浮窗的TextView上的数据，显示内存使用的百分比。
+	 * 
+	 * @param context
+	 *            可传入应用程序上下文。
+	 */
+	public static void updateUsedPercent(Context context) {
+		if (smallWindow != null) {
+			TextView percentView = (TextView) smallWindow.findViewById(R.id.percent);
+			percentView.setText(getUsedPercentValue(context));
+		}
+	}
+
+	/**
+	 * 是否有悬浮窗(包括小悬浮窗和大悬浮窗)显示在屏幕上。
+	 * 
+	 * @return 有悬浮窗显示在桌面上返回true，没有的话返回false。
+	 */
+	public static boolean isWindowShowing() {
+		return smallWindow != null || bigWindow != null;
+	}
+
+	/**
+	 * 如果WindowManager还未创建，则创建一个新的WindowManager返回。否则返回当前已创建的WindowManager。
+	 * 
+	 * @param context
+	 *            必须为应用程序的Context.
+	 * @return WindowManager的实例，用于控制在屏幕上添加或移除悬浮窗。
+	 */
+	private static WindowManager getWindowManager(Context context) {
+		if (mWindowManager == null) {
+			mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		}
+		return mWindowManager;
+	}
+
+	/**
+	 * 如果ActivityManager还未创建，则创建一个新的ActivityManager返回。否则返回当前已创建的ActivityManager。
+	 * 
+	 * @param context
+	 *            可传入应用程序上下文。
+	 * @return ActivityManager的实例，用于获取手机可用内存。
+	 */
+	private static ActivityManager getActivityManager(Context context) {
+		if (mActivityManager == null) {
+			mActivityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		}
+		return mActivityManager;
+	}
+
+	/**
+	 * 计算已使用内存的百分比，并返回。
+	 * 
+	 * @param context
+	 *            可传入应用程序上下文。
+	 * @return 已使用内存的百分比，以字符串形式返回。
+	 */
+	public static String getUsedPercentValue(Context context) {
+		String dir = &quot;/proc/meminfo&quot;;
+		try {
+			FileReader fr = new FileReader(dir);
+			BufferedReader br = new BufferedReader(fr, 2048);
+			String memoryLine = br.readLine();
+			String subMemoryLine = memoryLine.substring(memoryLine.indexOf(&quot;MemTotal:&quot;));
+			br.close();
+			long totalMemorySize = Integer.parseInt(subMemoryLine.replaceAll(&quot;\\D+&quot;, &quot;&quot;));
+			long availableSize = getAvailableMemory(context) / 1024;
+			int percent = (int) ((totalMemorySize - availableSize) / (float) totalMemorySize * 100);
+			return percent + &quot;%&quot;;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return &quot;悬浮窗&quot;;
+	}
+
+	/**
+	 * 获取当前可用内存，返回数据以字节为单位。
+	 * 
+	 * @param context
+	 *            可传入应用程序上下文。
+	 * @return 当前可用内存。
+	 */
+	private static long getAvailableMemory(Context context) {
+		ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+		getActivityManager(context).getMemoryInfo(mi);
+		return mi.availMem;
+	}
+
+}</pre><p>这个类负责了控制大悬浮窗，小悬浮窗的创建和移除，系统内存使用百分比的计算等操作。</p><p><br /></p><p>到这里基本所有的代码都已经写完了，然后我们来看一下AndroidManifest.xml文件吧，里面代码如下：</p><pre name="code" class="html">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    package=&quot;com.demo.floatwindowdemo&quot;
+    android:versionCode=&quot;1&quot;
+    android:versionName=&quot;1.0&quot; &gt;
+
+    &lt;uses-permission android:name=&quot;android.permission.SYSTEM_ALERT_WINDOW&quot; /&gt;
+
+    &lt;uses-sdk
+        android:minSdkVersion=&quot;8&quot;
+        android:targetSdkVersion=&quot;8&quot; /&gt;
+
+    &lt;application
+        android:allowBackup=&quot;true&quot;
+        android:icon=&quot;@drawable/ic_launcher&quot;
+        android:label=&quot;@string/app_name&quot;
+        android:theme=&quot;@style/AppTheme&quot; &gt;
+        &lt;activity
+            android:name=&quot;com.demo.floatwindowdemo.MainActivity&quot;
+            android:label=&quot;@string/app_name&quot; &gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+                &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+        
+        &lt;service android:name=&quot;.FloatWindowService&quot;&gt;&lt;/service&gt;
+    &lt;/application&gt;
+
+&lt;/manifest&gt;</pre><p>比较简单，记得把Activity和Service在里面注册好，还有一个权限声明需要添加的android.permission.SYSTEM_ALERT_WINDOW，表示需要用户授权允许创建系统提示窗口，也就是我们的桌面悬浮窗。</p><p><br /></p><p>好了，现在让我们运行一下项目吧，效果如下图，主界面只有一个简单的按钮，点击按钮后，Activity被关闭，小悬浮窗显示在桌面上。其中显示着当前内存使用的百分比。</p><p><br /></p><p style="text-align: center;"><img src="http://img.my.csdn.net/uploads/201303/19/1363678352_7525.png" alt="" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<img src="http://img.my.csdn.net/uploads/201303/19/1363679223_2516.png" alt="" /></p><p style="text-align: center;"><br /></p><p>小悬浮窗是可以自由拖动的，如果打开了其它的应用程序，小悬浮窗会自动隐藏，回到桌面后小悬浮窗又会显示出来。</p><p><br /></p><p style="text-align: center;"><img src="http://img.my.csdn.net/uploads/201303/19/1363679237_7501.png" alt="" /><span style="text-align: center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span>&nbsp;&nbsp;<img src="http://img.my.csdn.net/uploads/201303/19/1363679246_7122.png" alt="" /><br /></p><p style="text-align: center;"><br /></p><p>如果点击了小悬浮窗会弹出大悬浮窗来，这里我们大悬浮窗做的比较简单，就只有两个按钮。大悬浮窗展示的时候手机的所有其它程序是不可点的，因为焦点都在悬浮窗上了。点击返回按钮会重新展示小悬浮窗，点击关闭悬浮窗按钮，Service也会一起停掉。</p><p><br /></p><p style="text-align: center;"><img src="http://img.my.csdn.net/uploads/201303/19/1363679251_8641.png" alt="" /><br /></p><p style="text-align: center;"><br /></p><p>360手机卫士的一键加速功能我们就不做了，就像独孤九剑一样，重要的是剑意而不是剑招，我相信大家学会了创建悬浮窗的基本原理后可以做出比360更有创意的东西。<br /></p><p>如果大家还有什么疑问，请在下面留言。</p><p><br /></p><p>对桌面悬浮窗感兴趣的朋友可以继续阅读 <a target=_blank target="_blank" href="http://blog.csdn.net/guolin_blog/article/details/16919859" style="font-family: &quot;Microsoft YaHei&quot;; font-weight: bold; line-height: 30px;"><span style="font-size: 14px;">Android桌面悬浮窗进阶，QQ手机管家小火箭效果实现</span></a>&nbsp;。</p><p><br /></p><p><span style="font-size:24px; color:#3333ff; background-color:rgb(255,255,255)"><a target=_blank target="_blank" href="http://download.csdn.net/detail/sinyu890807/5158470">源码下载，请点击这里</a></span></p><p><br /></p><h3>补充：</h3><div>有朋友跟我反应，上面的代码在Android 3.0以上的系统运行会崩溃，我看了一下，确实如此，主要是3.0之后想要获取正在运行的任务，需要加上权限声明。在AndroidManifest.xml中加入&nbsp;</div><div>&lt;uses-permission android:name=&quot;android.permission.GET_TASKS&quot; /&gt;&nbsp;</div><div>即可解决此问题。</div><div><br /></div><style>blockquote{
+    border-left: 10px solid rgba(128,128,128,0.075);
+    background-color: rgba(128,128,128,0.05);
+    border-radius: 0 5px 5px 0;
+    padding: 15px 20px;
+}</style><blockquote><p>关注我的技术公众号，每天都有优质技术文章推送。关注我的娱乐公众号，工作、学习累了的时候放松一下自己。</p>    <p>微信扫一扫下方二维码即可关注：</p>    <p><img src="http://img.blog.csdn.net/20160507110203928" width="200px" alt="" /> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;<img src="http://img.blog.csdn.net/20161011100137978" width="200px" alt="" /></p></blockquote>   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="8689140" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>273</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>6</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='http://blog.csdn.net/sinyu890807/article/details/8714621';">下一篇</span><a href="http://blog.csdn.net/sinyu890807/article/details/8714621" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Android滑动菜单特效实现，仿人人客户端侧滑效果，史上最简单的侧滑实现</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36"  style="max-height:250px">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/aitumingmumu/article/details/72802870" title="Android 悬浮窗显示" strategy="BlogCommendFromBaidu_0" target="_blank">Android 悬浮窗显示</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/72?utm_source=blog7" title="白鹭引擎在WebAssembly中的实践" strategy="undefined" target="_blank">白鹭引擎在WebAssembly中的实践</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011913612/article/details/52296672" title="Android悬浮窗使用小结" strategy="BlogCommendFromBaidu_1" target="_blank">Android悬浮窗使用小结</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/detail/602?utm_source=blog7" title="Apache Weex：移动研发的进阶之路--董岩" strategy="undefined" target="_blank">Apache Weex：移动研发的进阶之路--董岩</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/love_world_/article/details/8785835" title="Android Window 二 可移动悬浮窗口  WindowManager" strategy="BlogCommendFromBaidu_2" target="_blank">Android Window 二 可移动悬浮窗口  WindowManager</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/3721?utm_source=blog7" title="微信小程序开发实战-快递查询 " strategy="undefined" target="_blank">微信小程序开发实战-快递查询 </a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/stevenhu_223/article/details/8504058" title="android悬浮窗口的实现" strategy="BlogCommendFromBaidu_3" target="_blank">android悬浮窗口的实现</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/4118?utm_source=blog7" title="Python内功修炼" strategy="undefined" target="_blank">Python内功修炼</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/cw2004100021124/article/details/78109816" title="Android 悬浮窗权限各机型各系统适配大全（总结）" strategy="BlogCommendFromBaidu_4" target="_blank">Android 悬浮窗权限各机型各系统适配大全（总结）</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/5337?utm_source=blog7" title=" MySQL深入浅出" strategy="undefined" target="_blank"> MySQL深入浅出</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/DJY1992/article/details/77942568" title="android 7.1悬浮窗系统权限问题" strategy="BlogCommendFromBaidu_5" target="_blank">android 7.1悬浮窗系统权限问题</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/4826?utm_source=blog7" title="Tensorflow项目实战-文本分类 " strategy="undefined" target="_blank">Tensorflow项目实战-文本分类 </a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/forLittleBlue/article/details/59563755" title="Android悬浮窗使用及窗口设置相关" strategy="BlogCommendFromBaidu_6" target="_blank">Android悬浮窗使用及窗口设置相关</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/chen930724/article/details/49624501" title="Android &#160;Windows悬浮窗" strategy="BlogCommendFromBaidu_7" target="_blank">Android &#160;Windows悬浮窗</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/weidi1989/article/details/7979615" title="Android之悬浮窗口实现(WindowManager)" strategy="BlogCommendFromBaidu_8" target="_blank">Android之悬浮窗口实现(WindowManager)</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/code_better/article/details/60886614" title="android实现可自由移动、监听点击事件的悬浮窗" strategy="BlogCommendFromBaidu_9" target="_blank">android实现可自由移动、监听点击事件的悬浮窗</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/sinyu890807/svc/GetSuggestContent/8689140",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8689140';
+    var commentscount = 199;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='Android桌面悬浮窗效果实现，仿360手机卫士悬浮窗效果';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/sinyu890807" target="_blank">
+    <img src="http://avatar.csdn.net/8/B/B/1_sinyu890807.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/sinyu890807" class="user_name" target="_blank">sinyu890807</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=sinyu890807','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                       <div class="ico_expert"  onclick="javascript:location='http://blog.csdn.net/experts/rule.html'" title="CSDN认证专家" style="cursor:pointer;width:60px;height:60px;background:url('http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/bokezhuanjiamiddle.png') no-repeat" ></div>
+                <div id="bms_box">
+                                            <a  target="_blank">
+                                                    <img src="http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/zhuanlandaren.png" onmouseover="m_over_m(this,2)" onmouseout="m_out_m()" alt="2" >
+                                            </a>
+                                            <a  target="_blank">
+                                                    <img src="http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/bokezhixing.png" onmouseover="m_over_m(this,6)" onmouseout="m_out_m()" alt="1" >
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>7557104次</span></li>
+    <li>积分：<span>41263</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog8.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：41263 </div>
+        </span>  </li>
+    <li>排名：<span>第99名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>101篇</span></li>
+    <li>转载：<span>0篇</span></li>
+    <li>译文：<span>6篇</span></li>
+    <li>评论：<span>14023条</span></li>
+</ul>
+</ul>
+</div>
+
+
+
+
+<div id="custom_column_36348469" class="panel">
+<ul class="panel_head"><span>我的新书</span></ul>
+<ul class="panel_body">
+<p>《第二行代码》已出版<br>新书基于Android 7.0系统全面升级<br>更加入了许多振奋人心的新技术<br>
+<br>
+</p><center><a href="http://blog.csdn.net/sinyu890807/article/details/52032038"><img src="http://img.blog.csdn.net/20161124140922633"></a></center>
+<div style="width:130px; margin-left: auto; margin-right: auto; margin-top: 5px">
+<center>
+<p><a target="_blank" href="http://blog.csdn.net/sinyu890807/article/details/52032038">查看详情</a></p><p></p></center>
+<br>
+纸质书购买：
+<center>
+<p>
+<a target="_blank" href="https://item.jd.com/12012505.html">京东</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="https://detail.tmall.com/item.htm?id=542469538914">天猫</a> 
+<br>
+<a target="_blank" href="http://product.dangdang.com/24144166.html">当当</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="https://www.amazon.cn/dp/B01MSR5D04">亚马逊</a>
+</p>
+</center>
+
+<br>
+电子书购买：
+<center>
+<p>
+<a target="_blank" href="http://www.ituring.com.cn/book/1841">PDF</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="https://www.amazon.cn/dp/B072FCNT11">Kindle</a> 
+<br>
+<a target="_blank" href="https://read.douban.com/ebook/35604638">豆瓣版</a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="http://www.duokan.com/book/142526">多看版</a>
+</p>
+</center>
+</div>
+</ul>
+</div>
+
+<div id="custom_column_22765363" class="panel">
+<ul class="panel_head"><span>微信公众号推荐</span></ul>
+<ul class="panel_body">
+<p>关注我的技术公众号，每天都有优质技术文章推送。</p>
+<p></p><center><img style="width:200px; height:200px" src="http://img.blog.csdn.net/20160507110203928"></center><p></p>
+
+<p>关注我的娱乐公众号，工作、学习累了的时候放松一下自己。</p>
+<p></p><center><img style="width:200px; height:200px" src="http://img.blog.csdn.net/20161011100137978"></center><p></p>
+
+<p></p><center><b>微信扫一扫上方二维码即可关注</b></center><p></p>
+</ul>
+</div>
+
+<div id="custom_column_26685579" class="panel">
+<ul class="panel_head"><span>共同进步</span></ul>
+<ul class="panel_body">
+<span style="display:block;">感兴趣的朋友可以加入我的QQ群，一起讨论学习，共同进步。</span><br>
+<span style="display:block;"><font color="#f00">群号：153325493</font></span><br>
+<span style="display:none;">人数有限，请不要重复加群</span>
+<span style="display:none;"><font color="#f9920d">(即满)</font></span>
+</ul>
+</div><div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>博客专栏</span></ul>
+    <ul class="panel_body" id="sp_column">
+    <table cellpadding="0" cellspacing="0"><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/15318.html" target="_blank"><img src="http://img.blog.csdn.net/20170420143210632" style="width:75px;height:75px;" /></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/15318.html" target="_blank">Glide最全解析</a>
+    <p>文章：7篇</p>
+    <span>阅读：168043</span>
+    </td>
+    </tr></table>
+    <table cellpadding="0" cellspacing="0"><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/android-database-pro.html" target="_blank"><img src="http://img.blog.csdn.net/20151123180007942" style="width:75px;height:75px;" /></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/android-database-pro.html" target="_blank">Android数据库高手秘籍</a>
+    <p>文章：9篇</p>
+    <span>阅读：536566</span>
+    </td>
+    </tr></table>
+    </ul>
+</div>
+
+<div id="custom_column_37398049" class="panel">
+<ul class="panel_head"><span>友情链接</span></ul>
+<ul class="panel_body">
+<a target="_blank" href="http://blog.csdn.net/lmj623565791">鸿洋的博客</a>
+<br><br>
+<a target="_blank" href="http://blog.csdn.net/xiaanming">夏安明的博客</a>
+<br><br>
+<a target="_blank" href="http://stormzhang.com/">stormzhang的博客</a>
+<br><br>
+<a target="_blank" href="http://www.jikedaohang.com/">极客导航</a>
+<br><br>
+<a target="_blank" href="https://bbs.ksyun.com/forum.php?ch=00008.00009&hmsr=yylt&hmpl=&hmcu=&hmkw=&hmci=">金山云-以渔论坛</a>
+</ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/sinyu890807/article/category/1369150" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android精华教程</a><span>(21)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/1399638" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android疑难解析</a><span>(43)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/2400923" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android第一行代码</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/2522725" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android数据库高手秘籍</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/1381137" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Java设计模式透析</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/1380837" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Ruby设计模式透析</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/sinyu890807/article/category/1807611" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">随笔</a><span>(7)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/sinyu890807/article/month/2017/10">2017年10月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2017/08">2017年08月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2017/06">2017年06月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2017/05">2017年05月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2017/04">2017年04月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2017/03">2017年03月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2017/02">2017年02月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/12">2016年12月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2016/11">2016年11月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/10">2016年10月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/08">2016年08月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/07">2016年07月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/06">2016年06月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2016/05">2016年05月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/04">2016年04月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/03">2016年03月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2016/02">2016年02月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2016/01">2016年01月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/12">2015年12月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2015/11">2015年11月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/10">2015年10月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/08">2015年08月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/07">2015年07月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/06">2015年06月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/05">2015年05月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/04">2015年04月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2015/03">2015年03月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2015/02">2015年02月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2014/12">2014年12月</a><span>(3)</span></li><li><a href="/sinyu890807/article/month/2014/11">2014年11月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2014/10">2014年10月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2014/09">2014年09月</a><span>(5)</span></li><li><a href="/sinyu890807/article/month/2014/08">2014年08月</a><span>(3)</span></li><li><a href="/sinyu890807/article/month/2014/07">2014年07月</a><span>(3)</span></li><li><a href="/sinyu890807/article/month/2014/06">2014年06月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2014/05">2014年05月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2014/04">2014年04月</a><span>(3)</span></li><li><a href="/sinyu890807/article/month/2014/03">2014年03月</a><span>(1)</span></li><li><a href="/sinyu890807/article/month/2014/01">2014年01月</a><span>(2)</span></li><li><a href="/sinyu890807/article/month/2013/12">2013年12月</a><span>(5)</span></li><li><a href="/sinyu890807/article/month/2013/11">2013年11月</a><span>(4)</span></li><li><a href="/sinyu890807/article/month/2013/10">2013年10月</a><span>(4)</span></li><li><a href="/sinyu890807/article/month/2013/09">2013年09月</a><span>(4)</span></li><li><a href="/sinyu890807/article/month/2013/08">2013年08月</a><span>(4)</span></li><li><a href="/sinyu890807/article/month/2013/07">2013年07月</a><span>(5)</span></li><li><a href="/sinyu890807/article/month/2013/06">2013年06月</a><span>(5)</span></li><li><a href="/sinyu890807/article/month/2013/05">2013年05月</a><span>(5)</span></li><li><a href="/sinyu890807/article/month/2013/04">2013年04月</a><span>(6)</span></li><li><a href="/sinyu890807/article/month/2013/03">2013年03月</a><span>(4)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/guolin_blog/article/details/9097463" title="Android事件分发机制完全解析，带你从源码的角度彻底理解(上)">Android事件分发机制完全解析，带你从源码的角度彻底理解(上)</a><span>(309959)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/17482095" title="Android Volley完全解析(一)，初识Volley的基本用法">Android Volley完全解析(一)，初识Volley的基本用法</a><span>(288803)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/8881711" title="Android Fragment完全解析，关于碎片你所需知道的一切">Android Fragment完全解析，关于碎片你所需知道的一切</a><span>(259978)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/12921889" title="Android LayoutInflater原理分析，带你一步步深入了解View(一)">Android LayoutInflater原理分析，带你一步步深入了解View(一)</a><span>(241335)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/11952435" title="Android Service完全解析，关于服务你所需知道的一切(上)">Android Service完全解析，关于服务你所需知道的一切(上)</a><span>(220094)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/18234477" title="Android ActionBar完全解析，使用官方推荐的最佳导航栏(上)">Android ActionBar完全解析，使用官方推荐的最佳导航栏(上)</a><span>(183813)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/9316683" title="Android高效加载大图、多图解决方案，有效避免程序OOM">Android高效加载大图、多图解决方案，有效避免程序OOM</a><span>(178115)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/16330267" title="Android视图绘制流程完全解析，带你一步步深入了解View(二)">Android视图绘制流程完全解析，带你一步步深入了解View(二)</a><span>(176133)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/17482165" title="Android Volley完全解析(二)，使用Volley加载网络图片">Android Volley完全解析(二)，使用Volley加载网络图片</a><span>(143277)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/17357967" title="Android自定义View的实现方法，带你一步步深入了解View(四)">Android自定义View的实现方法，带你一步步深入了解View(四)</a><span>(134323)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel tracking-ad" data-mod="popu_341">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/guolin_blog/article/details/26365913" title="历时一年，我的著作《第一行代码——Android》已出版！">历时一年，我的著作《第一行代码——Android》已出版！</a><span>(723)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/52032038" title="历久而新，我的新书《第二行代码》已出版！">历久而新，我的新书《第二行代码》已出版！</a><span>(657)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/12921889" title="Android LayoutInflater原理分析，带你一步步深入了解View(一)">Android LayoutInflater原理分析，带你一步步深入了解View(一)</a><span>(360)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/9097463" title="Android事件分发机制完全解析，带你从源码的角度彻底理解(上)">Android事件分发机制完全解析，带你从源码的角度彻底理解(上)</a><span>(322)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/34093441" title="Android照片墙完整版，完美结合LruCache和DiskLruCache">Android照片墙完整版，完美结合LruCache和DiskLruCache</a><span>(321)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/38556989" title="Android数据库高手秘籍(二)——创建表和LitePal的基本用法">Android数据库高手秘籍(二)——创建表和LitePal的基本用法</a><span>(278)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/9255575" title="Android下拉刷新完全解析，教你如何一分钟实现下拉刷新功能">Android下拉刷新完全解析，教你如何一分钟实现下拉刷新功能</a><span>(271)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/9671609" title="Android双向滑动菜单完全解析，教你如何一分钟实现双向滑动特效">Android双向滑动菜单完全解析，教你如何一分钟实现双向滑动特效</a><span>(268)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/49805231" title="2015年终总结，忙碌和无所事事的一年">2015年终总结，忙碌和无所事事的一年</a><span>(254)</span>
+</li>
+<li>
+<a href="/guolin_blog/article/details/8744400" title="Android滑动菜单框架完全解析，教你如何一分钟实现滑动菜单特效">Android滑动菜单框架完全解析，教你如何一分钟实现滑动菜单特效</a><span>(252)</span>
+</li>
+</ul>
+</div>
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/guolin_blog/article/details/78357251#comments">Android图片加载框架最全解析（七），实现带进度的Glide图片加载功能</a>
+    <p style="margin:0px;"><a href="/FinalLiangZai" class="user_name">FinalLiangZai</a>:
+@sinyu890807:吓得我趁博客内容还免费、还没转到书的时候，赶紧看/笑哭
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/39207945#comments">Android数据库高手秘籍(四)——使用LitePal建立表关联</a>
+    <p style="margin:0px;"><a href="/myzqsql" class="user_name">myzqsql</a>:
+@wjb820728252:find(Class&amp;lt;T&amp;gt; modelClass, long...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/52032038#comments">历久而新，我的新书《第二行代码》已出版！</a>
+    <p style="margin:0px;"><a href="/qq_30269343" class="user_name">qq_30269343</a>:
+你好，我在学习你的新书过程中，出现了Android studio 模拟器打开就闪退的情况，请问这个怎...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/53122387#comments">Android新特性介绍，ConstraintLayout完全解析</a>
+    <p style="margin:0px;"><a href="/w630886916" class="user_name">w630886916</a>:
+请教一个问题，如果有重叠关系。且都有点击事件。点击事件的触发是怎么走的？怎么确定上下层控件？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/45586553#comments">Android ListView异步加载图片乱序问题，原因分析及解决方案</a>
+    <p style="margin:0px;"><a href="/ghdsq" class="user_name">ghdsq</a>:
+方案一中的第24行：image.setImageResource(R.drawable.empty_...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/45586553#comments">历久而新，我的新书《第二行代码》已出版！</a>
+    <p style="margin:0px;"><a href="/MaybeForever" class="user_name">MaybeForever</a>:
+郭霖老师您好，最近在看您的《第一行代码(第二版)》中遇到一个问题，在P388倒数第二行的onRece...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/45586553#comments">Android新特性介绍，ConstraintLayout完全解析</a>
+    <p style="margin:0px;"><a href="/Z_4545287" class="user_name">Z_4545287</a>:
+第三方控件怎么办啊，能拖拽添加吗
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/39345833#comments">Android数据库高手秘籍(五)——LitePal的存储操作</a>
+    <p style="margin:0px;"><a href="/tang_haixuan" class="user_name">tang_haixuan</a>:
+@guolin:郭神，如果A对B是一对多的关系，B对C是一对多关系，如果A中已经保存一条数据a，此时...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/39345833#comments">Android数据库高手秘籍(五)——LitePal的存储操作</a>
+    <p style="margin:0px;"><a href="/tang_haixuan" class="user_name">tang_haixuan</a>:
+@guolin:郭神，如果A对B是一对多的关系，B对C是一对多关系，如果A中已经保存一条数据a，此时...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/guolin_blog/article/details/47803149#comments">Android静默安装实现方案，仿360手机助手秒装和智能安装功能</a>
+    <p style="margin:0px;"><a href="/nuyunhai" class="user_name">nuyunhai</a>:
+@fenglichenglin:时间有点久了。。我记得好像那个nodecontent的要根据自己的手...
+    </p>
+    </li>
+</ul>
+</div>
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script>
+
+<div id="custom_column_37394313" class="panel">
+<ul class="panel_head"><span>统计</span></ul>
+<ul class="panel_body">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1601636'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1601636' type='text/javascript'%3E%3C/script%3E"));</script>
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+
+
+           </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+     
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>   
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js?v2017.041" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170719001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=844287"></script>
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+</body>
+</html>   
